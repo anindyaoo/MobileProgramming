@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(HaloDuniaku());
+  runApp(const HaloDuniaku());
 }
 
 class HaloDuniaku extends StatelessWidget {
@@ -10,14 +10,15 @@ class HaloDuniaku extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false, // hilangkan banner debug
       home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.green,
-            title: Text("Aplikasi Saya"),
-          ),
-          body: Center(
-            child: Image(
-              image: NetworkImage("https://www.google.com/url?sa=i&url=https%3A%2F%2Ftirto.id%2Ftempat-wisata-di-mojokerto-yang-lagi-hits-dan-instagramable-g23Q&psig=AOvVaw074uhIwkOF7G581pSoCdXY&ust=1759247954068000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCKCh-r6r_o8DFQAAAAAdAAAAABAE")),
-            )));
+        appBar: AppBar(
+          backgroundColor: Colors.green,
+          title: Text("Aplikasi Saya"),
+        ),
+        body:  Center(
+          child: Image.network("https://www.pngall.com/wp-content/uploads/2016/07/Luffy-Transparent.png")),
+      ),
+    );
   }
 }
