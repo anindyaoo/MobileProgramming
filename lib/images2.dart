@@ -10,15 +10,14 @@ class HaloDuniaku extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, // hilangkan banner debug
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.green,
-          title: Text("Aplikasi Saya"),
+          title: const Text("Aplikasi Saya"),
         ),
-        body:  Center(
-          child: Image.network("https://www.pngall.com/wp-content/uploads/2016/07/Luffy-Transparent.png")),
-      ),
-    );
+        body: Center(
+          child: Image.network(
+            "https://pict.sindonews.net/dyn/850/pena/news/2023/11/10/700/1248623/10-karakter-attack-on-titan-paling-populer-di-myanimelist-ucw.jpg")),
+      ));
   }
 }
