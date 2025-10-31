@@ -34,11 +34,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text("HTTP POST"),
-      ),
+      appBar: AppBar(title: const Text("HTTP POST")),
       body: ListView(
-        padding: const EdgeInsets.all(30),
+        padding: const EdgeInsets.all(20),
         children: [
           TextField(
             controller: nameC,
@@ -49,7 +47,7 @@ class _HomePageState extends State<HomePage> {
               labelText: "Name",
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 15),
           TextField(
             controller: jobC,
             autocorrect: false,
@@ -59,31 +57,40 @@ class _HomePageState extends State<HomePage> {
               labelText: "Job",
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 15),
           ElevatedButton(
             onPressed: () async {
+              String nameInput = nameC.text;
+              String jobInput = jobC.text;
+
               try {
-                setState(() {
-                  hasilResponse =
-                  "Data berhasil dikirim!\n\nName : ${nameC.text}\nJob : ${jobC.text}";
-                });
                 var myresponse = await http.post(
                   Uri.parse("https://reqres.in/api/users"),
-                  body: json.encode({
-                    "name": nameC.text,
-                    "job": jobC.text
-                  }),
                   headers: {
                     "Content-Type": "application/json",
+                    "x-api-key": "reqres-free-v1"
                   },
+                  body: json.encode({
+                    "name": nameInput,
+                    "job": jobInput,
+                  }),
                 );
-                print("Response status: ${myresponse.statusCode}");
-                print("Response body: ${myresponse.body}");
+                if (myresponse.statusCode == 201) {
+                  var responseBody = json.decode(myresponse.body);
+                  setState(() {
+                    hasilResponse =
+                    "Data berhasil dibuat!\nID: ${responseBody['id']}\nName: ${responseBody['name']}\nJob: ${responseBody['job']}";
+                  });
+                } else {
+                  setState(() {
+                    hasilResponse =
+                    "Gagal mengirim data. Error: ${myresponse.statusCode}\nBody: ${myresponse.body}";
+                  });
+                }
               } catch (e) {
                 print("Error: $e");
                 setState(() {
-                  hasilResponse =
-                  "Data berhasil dikirim!\n\nName : ${nameC.text}\nJob : ${jobC.text}";
+                  hasilResponse = "Terjadi kesalahan: $e";
                 });
               }
             },
@@ -91,10 +98,10 @@ class _HomePageState extends State<HomePage> {
           ),
           const SizedBox(height: 30),
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.blue.shade100,
-              borderRadius: BorderRadius.circular(15),
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Text(hasilResponse, style: const TextStyle(fontSize: 16)),
           ),
