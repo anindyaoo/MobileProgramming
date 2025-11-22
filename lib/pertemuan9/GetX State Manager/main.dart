@@ -1,47 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CounterController extends GetxController {
-  var counter = 0.obs;
-
-  void increment() {
-    counter++;
-  }
-}
 
 void main() {
   runApp(MyApp());
 }
 
+
+// CONTROLLER
+class CountController extends GetxController {
+  var count = 0.obs;
+
+
+  void increment() {
+    count++;
+  }
+}
+
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Registrasi controller
+    Get.put(CountController());
+
+
     return GetMaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text("State Management Example")),
-        body: Column(
-          children: [
-            GetXExample(),
-          ],
-        ),
+        appBar: AppBar(title: Text("GetX State Manager")),
+        body: CounterExample(),
       ),
     );
   }
 }
 
-class GetXExample extends StatelessWidget {
-  final CounterController c = Get.put(CounterController());
 
+class CounterExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Obx(() => Text('Counter: ${c.counter}')),
-        ElevatedButton(
-          onPressed: c.increment,
-          child: Text("Increment with GetX"),
-        ),
-      ],
+    // Ambil kontroler
+    final CountController c = Get.find<CountController>();
+
+
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // UI akan update otomatis
+          Obx(() => Text(
+            "Counter: ${c.count}",
+            style: TextStyle(fontSize: 24),
+          )),
+
+
+          SizedBox(height: 16),
+
+
+          ElevatedButton(
+            onPressed: c.increment,
+            child: Text("Increment"),
+          ),
+        ],
+      ),
     );
   }
 }
